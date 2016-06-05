@@ -1,0 +1,27 @@
+#:kivy 1.0
+
+<FloatLayout>:
+    Image:
+        pos: root.pos
+        size: root.size
+        source: "gui/bg_01.jpg"
+        allow_stretch: True
+        keep_ratio: False
+
+    Label:
+        text: app.time
+        font_size: 48
+        bold: True
+
+    Label:
+        text: app.date
+        font_size: 16
+        pos_hint: {"right":1, "top":1}
+
+    Button:
+        size_hint: 0.03,0.05
+        pos_hint: {"right":1, "bottom":1}
+        text: "x"
+        color: 1,0,0,1
+        font_size: 16
+        on_press: app.closeApp()
