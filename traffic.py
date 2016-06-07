@@ -12,17 +12,11 @@ import hashlib
 import httplib
 import re
 import sys
+import ConfigParser
 from xml.dom import minidom
-
 from bs4 import BeautifulSoup
 from tools.helper import format_gib
 
-import ConfigParser
-
-#
-# TODO:
-#   - login credentials auslagern
-#
 
 USER_AGENT="Mozilla/5.0 (U; Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0"
 
@@ -140,9 +134,7 @@ class fritzController(object):
         htmlStr = page[start:end]
 
         soup = BeautifulSoup(htmlStr, 'html.parser')
-
-        #print soup.prettify()
-        table = soup.find('table') #, attrs={'class':'lineItemsTable'})
+        table = soup.find('table')
 
         data = []
         ftCon = []
@@ -151,13 +143,12 @@ class fritzController(object):
         for row in rows:
             cols = row.find_all('td')
             cols = [cell.text.strip() for cell in cols]
-            data.append([cell for cell in cols if cell]) # Get rid of empty values
+            data.append([cell for cell in cols if cell])
 
         for d in data:
             if len(d) > 0:
                 ft = fritzTraffic(d)
                 ftCon.append(ft)
-                #print ft
 
         return ftCon
 
